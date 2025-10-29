@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'docker/terminal-screenshot/**'
+      - './**'
   workflow_dispatch:
     inputs:
       fish_version:
@@ -46,8 +46,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./docker/terminal-screenshot
-          file: ./docker/terminal-screenshot/Dockerfile
+          context: .
+          file: ./Dockerfile
           push: true
           tags: |
             ${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tag }}
