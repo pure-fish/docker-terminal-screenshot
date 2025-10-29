@@ -59,5 +59,4 @@ jobs:
 
       - name: Test image
         run: |
-          docker run --rm ${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tag }} "terminal-screenshot --version"
-          docker run --rm ${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tag }} "fish --version"
+          make test TAG=${{ matrix.version.fish }}

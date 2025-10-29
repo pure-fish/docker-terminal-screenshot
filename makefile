@@ -2,8 +2,12 @@
 # Pre-built image with Chromium, Puppeteer, and terminal-screenshot CLI
 
 FISH_VERSION ?= 4.0.2
-IMAGE_NAME = purefish/terminal-screenshot
-TAG = fish-$(FISH_VERSION)
+IMAGE_NAME ?= purefish/terminal-screenshot
+TAG ?= fish-$(FISH_VERSION)
+
+# fail on first error
+SHELL := /bin/bash
+.SHELLFLAGS := -e -c
 
 .PHONY: help build test push clean
 
