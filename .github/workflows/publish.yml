@@ -5,7 +5,8 @@ on:
     branches:
       - main
     paths:
-      - './**'
+      - ".github/**/*.yml"
+      - "Dockerfile"
   workflow_dispatch:
     inputs:
       fish_version:
