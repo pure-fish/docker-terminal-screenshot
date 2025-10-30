@@ -3,7 +3,7 @@
 # Published as: purefish/terminal-screenshot
 
 ARG FISH_VERSION=4.0.2
-FROM purefish/docker-fish:${FISH_VERSION}
+FROM purefish/docker-fish:${FISH_VERSION} AS base-image
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 USER root
