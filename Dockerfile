@@ -32,7 +32,9 @@ USER root
 # Install Yarn and Puppeteer (pinned versions)
 RUN npm install --global \
     yarn@1.22.22 \
-    puppeteer@21.10.0
+    puppeteer@21.10.0 \
+ && npm cache clean --force \
+ && rm -rf /root/.npm /tmp/*
 USER nemo
 
 FROM with-js-tools-installed AS with-terminal-screenshot-installed
@@ -40,7 +42,7 @@ FROM with-js-tools-installed AS with-terminal-screenshot-installed
 USER root
 RUN git clone --depth 1 https://github.com/edouard-lopez/terminal-screenshot.git --branch feat/add-color-scheme-support \
  && cd terminal-screenshot \
- && yarn install \
+ && yarn install --production --frozen-lockfile \
  && yarn cache clean \
  && yarn build \
  && mkdir -p /usr/local/lib/terminal-screenshot \
@@ -49,7 +51,7 @@ RUN git clone --depth 1 https://github.com/edouard-lopez/terminal-screenshot.git
  && ln -s /usr/local/lib/terminal-screenshot/out/src/cli.js /usr/local/bin/terminal-screenshot \
  && chmod +x /usr/local/bin/terminal-screenshot \
  && cd .. \
- && rm -rf terminal-screenshot
+ && rm -rf terminal-screenshot /root/.npm /tmp/*
 USER nemo
 
 FROM with-terminal-screenshot-installed AS final
