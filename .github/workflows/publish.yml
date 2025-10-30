@@ -65,4 +65,4 @@ jobs:
 
       - name: Test image
         run: |
-          make test IMAGE_NAME=terminal-screenshot TAG=${{ matrix.version.fish }}
+          make test IMAGE_NAME=${{ env.IMAGE_NAME }} TAG=${{ matrix.version.fish }}
