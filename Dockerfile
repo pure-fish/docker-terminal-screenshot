@@ -21,7 +21,6 @@ RUN apk add --no-cache \
     nodejs \
     npm \
     font-noto \
-    font-noto-symbols \
     font-noto-emoji
 
 # Configure Puppeteer to use system Chromium
