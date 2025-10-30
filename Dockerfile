@@ -6,9 +6,9 @@ ARG FISH_VERSION=4.0.2
 FROM purefish/docker-fish:${FISH_VERSION} AS base-image
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-USER root
 
 FROM base-image AS with-os-requirements
+USER root
 # Install Chromium, fonts, and Node.js
 # hadolint ignore=DL3018
 RUN apk add --no-cache \
@@ -22,18 +22,22 @@ RUN apk add --no-cache \
     npm \
     font-noto \
     font-noto-emoji
+USER nemo
 
 # Configure Puppeteer to use system Chromium
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 FROM with-os-requirements AS with-js-tools-installed
+USER root
 # Install Yarn and Puppeteer (pinned versions)
 RUN npm install --global \
     yarn@1.22.22 \
     puppeteer@21.10.0
+USER nemo
 
 FROM with-js-tools-installed AS with-terminal-screenshot-installed
 # Build and install terminal-screenshot
+USER root
 RUN git clone --depth 1 https://github.com/edouard-lopez/terminal-screenshot.git --branch feat/add-color-scheme-support \
  && cd terminal-screenshot \
  && yarn install \
@@ -46,6 +50,7 @@ RUN git clone --depth 1 https://github.com/edouard-lopez/terminal-screenshot.git
  && chmod +x /usr/local/bin/terminal-screenshot \
  && cd .. \
  && rm -rf terminal-screenshot
+USER nemo
 
 FROM with-terminal-screenshot-installed AS final
 USER nemo
