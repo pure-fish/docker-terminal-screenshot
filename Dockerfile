@@ -32,31 +32,37 @@ USER root
 # Install Yarn and Puppeteer (pinned versions)
 RUN npm install --global \
     yarn@1.22.22 \
-    puppeteer@21.10.0 \
- && npm cache clean --force \
- && rm -rf /root/.npm /tmp/*
+    puppeteer@21.10.0
 USER nemo
 
 FROM with-js-tools-installed AS with-terminal-screenshot-installed
 # Build and install terminal-screenshot
 USER root
-RUN git clone --depth 1 https://github.com/edouard-lopez/terminal-screenshot.git --branch feat/add-color-scheme-support \
- && cd terminal-screenshot \
- && yarn install --production --frozen-lockfile \
- && yarn cache clean \
- && yarn build \
- && mkdir -p /usr/local/lib/terminal-screenshot \
- && cp -r out /usr/local/lib/terminal-screenshot/ \
- && cp -r node_modules /usr/local/lib/terminal-screenshot/ \
- && ln -s /usr/local/lib/terminal-screenshot/out/src/cli.js /usr/local/bin/terminal-screenshot \
- && chmod +x /usr/local/bin/terminal-screenshot \
- && cd .. \
- && rm -rf terminal-screenshot /root/.npm /tmp/*
+WORKDIR /home/nemo
+RUN git clone \
+    --depth 1 \
+    --branch feat/add-color-scheme-support \
+    https://github.com/edouard-lopez/terminal-screenshot.git \
+    && cd terminal-screenshot \
+    && yarn install --frozen-lockfile \
+    && yarn cache clean \
+    && yarn build \
+    && mkdir -p /usr/local/lib/terminal-screenshot \
+    && cp -r out /usr/local/lib/terminal-screenshot/ \
+    && cp -r node_modules /usr/local/lib/terminal-screenshot/ \
+    && ln -s /usr/local/lib/terminal-screenshot/out/src/cli.js /usr/local/bin/terminal-screenshot \
+    && chmod +x /usr/local/bin/terminal-screenshot 
 USER nemo
 
 FROM with-terminal-screenshot-installed AS final
-USER nemo
+USER root
+
+# cleaning
 WORKDIR /home/nemo
+RUN rm -rf terminal-screenshot /root/.npm /tmp/* \
+    && npm cache clean --force \
+    && rm -rf /root/.npm /tmp/*
+USER nemo
 
 # Verify installation
 RUN terminal-screenshot --help
