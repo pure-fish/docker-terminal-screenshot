@@ -47,7 +47,7 @@ jobs:
         run: |
           FISH_VERSION="${{ matrix.version.fish || '4.0.2' }}"
           echo "fish_version=${FISH_VERSION}" >> $GITHUB_OUTPUT
-          echo "tag=fish-${FISH_VERSION}" >> $GITHUB_OUTPUT
+          echo "tag=${FISH_VERSION}" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
