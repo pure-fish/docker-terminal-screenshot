@@ -11,7 +11,7 @@ FROM base-image AS with-os-requirements
 USER root
 # Install Chromium, fonts, and Node.js
 # hadolint ignore=DL3018
-RUN apk add --no-cache \
+RUN apk upgrade && apk add --no-cache \
     chromium \
     nss \
     freetype \
