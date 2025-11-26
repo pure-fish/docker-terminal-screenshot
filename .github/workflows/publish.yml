@@ -27,6 +27,7 @@ jobs:
       matrix:
         version: [
             { fish: 4.0.2, alpine: 3.22 },
+            { fish: 4.2.1, alpine: 'edge' },
         ]
 
     steps:
