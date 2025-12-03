@@ -88,8 +88,8 @@ make push
 
 ## [MIT][MIT] License
 
-[ci-link]: <https://github.com/pure-fish/terminal-screenshot/actions> "Github CI"
-[ci-status]: https://img.shields.io/github/actions/workflow/status/pure-fish/terminal-screenshot/.github/workflows/ci.yml?style=flat-square
+[ci-link]: <https://github.com/pure-fish/docker-terminal-screenshot/actions> "Github CI"
+[ci-status]: https://img.shields.io/github/actions/workflow/status/pure-fish/docker-terminal-screenshot/.github/workflows/ci.yml?style=flat-square
 [sponsors]: https://img.shields.io/github/sponsors/edouard-lopez?label=💖&style=flat-square "GitHub Sponsors"
 [sponsor-link]: https://github.com/sponsors/edouard-lopez/ "Become a sponsor"
 [docker-pull]: https://img.shields.io/docker/pulls/purefish/terminal-screenshot.svg "Docker Pulls"
